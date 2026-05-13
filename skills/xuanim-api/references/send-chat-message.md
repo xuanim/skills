@@ -18,7 +18,7 @@
 | `contentType` | string | 是 | `'plain'`（纯文本）或 `'text'`（Markdown） |
 | `url` | string | 否 | 消息指向的链接 |
 | `actions` | object[] | 否 | 操作按钮数组（结构同 im/sendNotification） |
-| `sender` | object | 否 | 发送方信息（结构同 im/sendNotification） |
+| `sender` | object | 是 | 发送方信息（结构同 im/sendNotification） |
 
 ## @提及用户
 

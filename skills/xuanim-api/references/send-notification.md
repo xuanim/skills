@@ -18,24 +18,28 @@
 | `contentType` | string | 是 | `'plain'`（纯文本）或 `'text'`（Markdown） |
 | `url` | string | 否 | 点击通知打开的链接 |
 | `actions` | object[] | 否 | 操作按钮数组（见下方） |
-| `sender` | object | 否 | 发送方信息（见下方） |
+| `sender` | object | 是 | 发送方信息（见下方） |
 
 ### 操作按钮（actions 元素）
 
+`actions` 为可选数组。未传或传 `null` 时，服务端会按空数组处理。
+
+当前服务端仅校验 `actions` 本身能否被解析为 JSON 数组，不会校验数组元素的字段结构、必填项或取值范围。下面字段属于推荐约定，而非服务端强制要求。
+
 | 属性 | 类型 | 必须 | 说明 |
 |------|------|------|------|
-| `label` | string | 是 | 按钮显示文本 |
-| `icon` | string | 否 | 按钮图标 URL |
-| `url` | string | 是 | 点击按钮打开的链接 |
-| `type` | string | 否 | 按钮样式：`'primary'`、`'success'`、`'danger'`、`'warning'`、`'info'`、`'important'`、`'special'` |
+| `label` | string | 否 | 推荐：按钮显示文本 |
+| `icon` | string | 否 | 推荐：按钮图标 URL |
+| `url` | string | 否 | 推荐：点击按钮打开的链接 |
+| `type` | string | 否 | 推荐：按钮样式，如 `primary`、`success`、`danger`、`warning`、`info`、`important`、`special` |
 
 ### 发送方信息（sender）
 
 | 属性 | 类型 | 必须 | 说明 |
 |------|------|------|------|
-| `id` | string / number | 是 | 发送方唯一标识 |
+| `id` | string / number | 否 | 发送方唯一标识 |
 | `name` | string | 否 | 发送方显示名称 |
-| `avatar` | string | 是 | 发送方头像图片 URL |
+| `avatar` | string | 否 | 发送方头像图片 URL |
 
 ## 返回值
 
