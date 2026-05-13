@@ -17,11 +17,11 @@ GREEN='\033[0;32m'
 NC='\033[0m'
 
 declare -A TESTS=(
-    ["getGroupChats"]="m=im&f=getGroupChats&code=${CODE}:3c49a8b9cf6be9b8c0496c9cd1938d76"
-    ["getChatUsers-with-gid"]="m=im&f=getChatUsers&gid=30683aea-7a1f-4ec8-a6d6-834e0310fd7d&code=${CODE}:29b61082610621da5234e89e27a51ac2"
-    ["getChatUsers-all"]="m=im&f=getChatUsers&code=${CODE}:ac08eda86a9a1269c01bc9837820a54a"
+    ["getChatGroups"]="im/getChatGroups?code=${CODE}:1a95a530d263cc19d51405566c00910b"
+    ["getChatUsers-with-gid"]="im/getChatUsers?code=${CODE}&gid=30683aea-7a1f-4ec8-a6d6-834e0310fd7d:5d2d87e7fed3c51e6d599e4cc74fcdf8"
+    ["getChatUsers-all"]="im/getChatUsers?code=${CODE}:6de85774f3ab629fcebf9ac284acc336"
     ["sendNotification"]="im/sendNotification?code=${CODE}:e5f94a972bb6693e5e546c3f17a44e6a"
-    ["sendChatMessage"]="m=im&f=sendChatMessage&code=${CODE}:8e21e776f6056d9a5e59d4022050f06a"
+    ["sendChatMessage"]="im/sendChatMessage?code=${CODE}:7211b3be50c9a2c7760afc48f8041bcf"
 )
 
 run_test() {
@@ -62,9 +62,9 @@ done
 url=$(python3 -c "
 import sys; sys.path.insert(0, '${SCRIPTS_DIR}')
 from sign import build_url
-print(build_url('${BASE_URL}', 'im', 'getChatUsers', '${CODE}', '${KEY}', {'gid': '30683aea-7a1f-4ec8-a6d6-834e0310fd7d'}))
+print(build_url('${BASE_URL}:11443', '/im/getChatUsers', '${CODE}', '${KEY}', {'gid': '30683aea-7a1f-4ec8-a6d6-834e0310fd7d'}))
 ")
-expected_url="${BASE_URL}/x.php?m=im&f=getChatUsers&code=${CODE}&gid=30683aea-7a1f-4ec8-a6d6-834e0310fd7d&token=cceffb27d29209e36faf65e22dc90bf7"
+expected_url="${BASE_URL}:11443/im/getChatUsers?code=${CODE}&gid=30683aea-7a1f-4ec8-a6d6-834e0310fd7d&token=5d2d87e7fed3c51e6d599e4cc74fcdf8"
 if [ "$url" = "$expected_url" ]; then
     echo -e "  ${GREEN}PASS${NC} build_url"
     PASS=$((PASS + 1))
@@ -85,7 +85,7 @@ done
 
 url=$(node -e "
 const { buildUrl } = require('${SCRIPTS_DIR}/sign');
-console.log(buildUrl('${BASE_URL}', 'im', 'getChatUsers', '${CODE}', '${KEY}', { gid: '30683aea-7a1f-4ec8-a6d6-834e0310fd7d' }));
+console.log(buildUrl('${BASE_URL}:11443', '/im/getChatUsers', '${CODE}', '${KEY}', { gid: '30683aea-7a1f-4ec8-a6d6-834e0310fd7d' }));
 ")
 if [ "$url" = "$expected_url" ]; then
     echo -e "  ${GREEN}PASS${NC} build_url"
@@ -115,7 +115,7 @@ done
 
 url=$(bash -c "
 source ${SCRIPTS_DIR}/sign.sh
-build_url '${BASE_URL}' 'im' 'getChatUsers' '${CODE}' '${KEY}' 'gid=30683aea-7a1f-4ec8-a6d6-834e0310fd7d'
+build_url '${BASE_URL}:11443' '/im/getChatUsers' '${CODE}' '${KEY}' 'gid=30683aea-7a1f-4ec8-a6d6-834e0310fd7d'
 ")
 if [ "$url" = "$expected_url" ]; then
     echo -e "  ${GREEN}PASS${NC} build_url (bash)"
